@@ -1,0 +1,28 @@
+<%- include('../../shared/includes/head',{title:"DevShop - All products"}) %>
+    <link rel="stylesheet" href="/styles/product.css">
+    <script src="/scripts/product-management.js" defer></script>
+    </head>
+    </body>
+    <%- include('../../shared/includes/header') %>
+        <main>
+            <h1>Product Adminstration</h1>
+            <section>
+                <h2>Product Management</h2>
+                <p>
+                    <a class="btn" href="/admin/products/new">Add Product</a>
+                </p>
+            </section>
+            <section>
+                <ul id="products-grid">
+                    <% for(let product of products) { %>
+                        <li>
+                            <%- include('../../shared/includes/product-item',{product:product}) %>
+                        </li>
+                        <% } %>
+                </ul>
+            </section>
+
+        </main>
+        <%- include('../../shared/includes/footer') %>
+
+            </html>

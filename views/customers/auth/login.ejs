@@ -1,0 +1,36 @@
+<%- include('../../shared/includes/head',{title:"DevShop - Login"}) %>
+    <link rel="stylesheet" href="/styles/forms.css">
+    <link rel="stylesheet" href="/styles/auth.css">
+    </head>
+    </body>
+    <%- include('../../shared/includes/header') %>
+        <main>
+            <h1>Login</h1>
+            <% if (sessionData.message) { %>
+                <section class="alert">
+                    <h2>Invalid Credentials</h2>
+                    <p>
+                        <%= sessionData.message %>
+                    </p>
+                </section>
+                <% } %>
+                    <form action="/login" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+                        <p>
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" name="email" value="<%= sessionData.email %>" required>
+                        </p>
+                        <p>
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" value="<%= sessionData.password %>"
+                                required>
+                        </p>
+                        <p>
+                            <button class="btn">Login</button>
+                        </p>
+                        <p id="switch form">Don't have an account? <a href="/signup">Signup</a></p>
+                    </form>
+        </main>
+        <%- include('../../shared/includes/footer') %>
+
+            </html>

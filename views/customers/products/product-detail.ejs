@@ -1,0 +1,27 @@
+<%- include('../../shared/includes/head',{title:"DevShop -Product detail "}) %>
+    <link rel=" stylesheet" href="/styles/product.css">
+    <script src="/scripts/cart-management.js" defer></script>
+    </head>
+    </body>
+    <%- include('../../shared/includes/header') %>
+        <main id="product-details">
+            <header>
+                <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+                <div id="product-info">
+                    <h1>
+                        <%= product.title %>
+                    </h1>
+                    <p>Kshs. <%= product.price %>
+                    </p>
+                    <button class="btn" data-productid="<%= product.id %>" data-csrf="<%= locals.csrfToken %>">Add to
+                        Cart</button>
+                </div>
+            </header>
+            <p>
+            <h1>Product Description.</h1>
+            <%= product.description %>
+                </p>
+        </main>
+        <%- include('../../shared/includes/footer') %>
+
+            </html>

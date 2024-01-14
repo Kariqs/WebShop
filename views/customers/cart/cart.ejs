@@ -1,0 +1,26 @@
+<%- include('../../shared/includes/head',{title:"DevShop - Your Cart"}) %>
+    <link rel="stylesheet" href="/styles/cart.css">
+    </head>
+    </body>
+    <%- include('../../shared/includes/header') %>
+        <main>
+            <h1>Your Cart</h1>
+
+            <ul id="cart-items">
+                <% for( let cartItem of locals.cart.items ) { %>
+                    <li>
+                        <%- include('includes/cart-item',{item:cartItem}) %>
+                    </li>
+
+                    <% } %>
+
+            </ul>
+            <div id="cart-total"> 
+                <p>Total: Kshs. <%= locals.cart.totalPrice.toFixed(2) %></p>
+                <button class="btn">Make Purchase</button>
+            </div>
+            
+        </main>
+        <%- include('../../shared/includes/footer') %>
+
+            </html>
