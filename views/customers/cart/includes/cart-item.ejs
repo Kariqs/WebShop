@@ -4,11 +4,15 @@
             <%= item.product.title %>
         </h2>
         <p>
-            Kshs. <%= item.totalPrice %> <span class="cart-product-price">(Kshs. <%= item.product.price.toFixed(2) %>)</span>
+            Kshs.<span class="cart-item-price">
+                <%= item.totalPrice %>
+            </span>
+            <span class="cart-product-price">(Kshs. <%= item.product.price.toFixed(2) %>
+                    )</span>
         </p>
     </div>
-    <div id="cart-item-management">
+    <form class="cart-item-management" data-productid="<%= item.product.id %>" data-csrf="<%= locals.csrfToken %>">
         <input type="number" value="<%= item.quantity %>" required>
         <button class="btn btn-alt">Update</button>
-    </div>
+    </form>
 </article>
