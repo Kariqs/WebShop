@@ -1,12 +1,14 @@
-const { ObjectId } = require("mongodb");
+const mongodb = require("mongodb");
+
 const db = require("../data/database");
+
 class Product {
   constructor(productData) {
     this.title = productData.title;
     this.summary = productData.summary;
-    this.price = productData.price;
+    this.price = +productData.price;
     this.description = productData.description;
-    this.image = productData.image; //the name of the imagefile.
+    this.image = productData.image; // the name of the image file
     this.updateImageData();
     if (productData._id) {
       this.id = productData._id.toString();
@@ -16,7 +18,7 @@ class Product {
   static async findById(productId) {
     let prodId;
     try {
-      prodId = new ObjectId(productId);
+      prodId = new mongodb.ObjectId(productId);
     } catch (error) {
       error.code = 404;
       throw error;
@@ -27,7 +29,7 @@ class Product {
       .findOne({ _id: prodId });
 
     if (!product) {
-      const error = new Error("Could not find product with that id.");
+      const error = new Error("Could not find product with provided id.");
       error.code = 404;
       throw error;
     }
@@ -41,6 +43,23 @@ class Product {
       .collection("products")
       .find()
       .toArray();
+
+    return products.map(function (productDocument) {
+      return new Product(productDocument);
+    });
+  }
+
+  static async findMultiple(ids) {
+    const productIds = ids.map(function (id) {
+      return new mongodb.ObjectId(id);
+    });
+
+    const products = await db
+      .getDatabase()
+      .collection("products")
+      .find({ _id: { $in: productIds } })
+      .toArray();
+
     return products.map(function (productDocument) {
       return new Product(productDocument);
     });
@@ -55,20 +74,24 @@ class Product {
     const productData = {
       title: this.title,
       summary: this.summary,
-      price: +this.price,
+      price: this.price,
       description: this.description,
       image: this.image,
     };
 
     if (this.id) {
-      const productId = new ObjectId(this.id);
+      const productId = new mongodb.ObjectId(this.id);
+
       if (!this.image) {
         delete productData.image;
       }
-      await db
-        .getDatabase()
-        .collection("products")
-        .updateOne({ _id: productId }, { $set: productData });
+
+      await db.getDatabase().collection("products").updateOne(
+        { _id: productId },
+        {
+          $set: productData,
+        }
+      );
     } else {
       await db.getDatabase().collection("products").insertOne(productData);
     }
@@ -78,9 +101,13 @@ class Product {
     this.image = newImage;
     this.updateImageData();
   }
- remove() {
-    const productId = new ObjectId(this.id);
-    return db.getDatabase().collection("products").deleteOne({ _id: productId });
+
+  remove() {
+    const productId = new mongodb.ObjectId(this.id);
+    return db
+      .getDatabase()
+      .collection("products")
+      .deleteOne({ _id: productId });
   }
 }
 
