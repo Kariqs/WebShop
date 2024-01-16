@@ -2,7 +2,7 @@ const updateCartFormElements = document.querySelectorAll(
   ".cart-item-management"
 );
 const cartTotalPriceElement = document.getElementById("cart-total-price");
-const cartBadge = document.querySelector(".nav-items .badge");
+const cartBadges = document.querySelectorAll(".nav-items .badge");
 
 async function updateCartItem(event) {
   event.preventDefault();
@@ -52,7 +52,9 @@ async function updateCartItem(event) {
   cartTotalPriceElement.textContent =
     responseData.updatedCartData.newTotalPrice.toFixed(2);
 
-  cartBadge.textContent = responseData.updatedCartData.newTotalQuantity;
+  for (const cartBadge of cartBadges) {
+    cartBadge.textContent = responseData.updatedCartData.newTotalQuantity;
+  }
 }
 
 for (let formElement of updateCartFormElements) {

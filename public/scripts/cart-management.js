@@ -1,7 +1,7 @@
 const addToCartButtobElement = document.querySelector(
   "#product-details button"
 );
-const cartSpanElement = document.querySelector(".nav-items .badge");
+const cartSpanElements = document.querySelectorAll(".nav-items .badge");
 
 async function addToCart() {
   let response;
@@ -30,7 +30,9 @@ async function addToCart() {
   console.log(responseData);
   const newTotalQuantity = responseData.newTotalItems;
   console.log(newTotalQuantity);
-  cartSpanElement.textContent = newTotalQuantity;
+  for(const cartSpanElement of cartSpanElements){
+    cartSpanElement.textContent = newTotalQuantity;
+  }
 }
 
 addToCartButtobElement.addEventListener("click", addToCart);
