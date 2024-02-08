@@ -2,8 +2,11 @@ const { MongoClient } = require("mongodb");
 
 let database;
 
+let mongodbUrl =
+  "mongodb+srv://kariukibenard189:Benada254@cluster0.lzdomio.mongodb.net/?retryWrites=true&w=majority";
+
 async function connectToDatabase() {
-  const client = new MongoClient("mongodb://127.0.0.1:27017").connect();
+  const client = new MongoClient(mongodbUrl).connect();
   database = (await client).db("online-shop");
 }
 
