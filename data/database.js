@@ -1,9 +1,9 @@
 const { MongoClient } = require("mongodb");
+require("dotenv").config();
 
 let database;
 
-let mongodbUrl =
-  "mongodb+srv://kariukibenard189:Benada254@cluster0.lzdomio.mongodb.net/?retryWrites=true&w=majority";
+let mongodbUrl = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017";
 
 async function connectToDatabase() {
   const client = new MongoClient(mongodbUrl).connect();
